@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout Flex</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: sans-serif;
+        }
+
+        body {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #3498db;
+            color: white;
+            padding: 1rem;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+        }
+            .sidebar hr {
+                border: none;
+                border-top: 1px solid white;
+                margin: 1rem 0;
+            }
+
+        .menu-section {
+            margin-top: 1rem;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item {
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+            .menu-item:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+        .submenu {
+            display: none;
+            margin-left: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .submenu-item {
+            padding: 0.4rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .submenu-item:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+
+        /* Area kanan */
+        .main-container {
+            margin-left: 20%;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+            .main-container.full {
+                margin-left: 0;
+                width: 100%;
+            }
+
+        .header {
+            background-color: #3498db;
+            padding: 1rem;
+            color: white;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .burger {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #ecf0f1;
+        }
+
+        .footer {
+            background-color: #34495e;
+            color: white;
+            padding: 1rem;
+            flex-shrink: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <h1>MyLab</h1>
+        <hr>
+
+        <div class="menu-section">
+            <p class="section-title">MAIN NAV</p>
+            <div class="menu-item" onclick="toggleSubmenu('chats')">
+                CHATS
+                <span>‹</span>
+            </div>
+            <div class="submenu" id="chats">
+                <div class="submenu-item">List data</div>
+                <div class="submenu-item">Tambah data</div>
+            </div>
+
+            <div class="menu-item" onclick="toggleSubmenu('widgets')">
+                WIDGETS
+                <span>‹</span>
+            </div>
+            <div class="submenu" id="widgets">
+                <div class="submenu-item">List data</div>
+                <div class="submenu-item">Tambah data</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main-container" id="mainContainer">
+        <div class="header">
+            <button class="burger" onclick="toggleSidebar()">☰</button>
+            <button class="logout-btn">Logout</button>
+        </div>
+        <div class="content">
+            <p>Konten utama panjang...</p>
+            <p>Scroll ke bawah...</p>
+            <p style="margin-top: 1000px;">Akhir konten</p>
+        </div>
+        <div class="footer">MyLab - 2025</div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('mainContainer');
+            sidebar.classList.toggle('hidden');
+            main.classList.toggle('full');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+Buatkan saya program lengkap berbasis Node.js menggunakan Express dan MySQL, dengan struktur direktori seperti di bawah ini.
+Jangan menambahkan file di luar yang saya minta.
+Sistem ini menggunakan session login, dan user tidak boleh bisa akses dashboard jika belum login.
+
+Gunakan pendekatan SPA (Single Page App) sederhana:
+Semua navigasi dan interaksi CRUD dilakukan lewat AJAX.
+Tidak ada reload halaman — cukup ubah isi <main> atau popup/modal.
+Tampilan cukup sederhana. Fokus ke fungsional.
+
+📁 Struktur Direktori
+markdown
+Salin
+Edit
+- server.js
+- db.js
+- halamanawal.js
+- /login
+    - login.js
+    - logout.js
+- /dashboard
+    - admin.js
+- /sidebar
+    - header.js     # tombol logout
+    - footer.js
+    - leftside.js   # sidebar ke /dashboard/home dan /users
+- /users
+    - indeks.js     # tampilkan semua user + foto
+    - create.js     # form tambah user (upload foto)
+    - delete.js     # hapus user
+    - edit.js       # ambil data user untuk edit
+    - update.js     # simpan hasil update
+- /dataset          # folder penyimpanan foto
+🔧 Detail Teknis
+MySQL Config:
+
+sql
+Salin
+Edit
+CREATE DATABASE mylab;
+USE mylab;
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  role ENUM('superadmin','dosen','laboran') NOT NULL,
+  nama VARCHAR(100) NOT NULL,
+  foto VARCHAR(255),
+  password VARCHAR(100)
+);
+MySQL user: root, password: gpuasamu
+
+halamanawal.js → menampilkan sapaan dan tombol login (tidak ada register)
+
+login.js / logout.js → mengelola login/logout pakai express-session
+
+dashboard/admin.js:
+
+Layout lengkap (header, sidebar, <main id="konten">, footer)
+
+Sidebar berisi navigasi ke:
+
+Home → menyapa user
+
+Users → menampilkan user list dari /users/indeks
+
+Link sidebar pakai class ajax dan fetch konten via AJAX
+
+Header punya tombol logout
+
+⚠️ Batasan & Perilaku yang Diinginkan
+Layout (header, sidebar, footer) hanya dimuat 1x (saat masuk dashboard)
+
+AJAX hanya mengisi konten <main> agar tidak terjadi duplikasi layout
+
+Aksi CRUD (di direktori /users) tidak boleh pindah halaman
+
+Tambah/Edit/Delete dilakukan dengan popup/modal
+
+Setelah submit (create/update/delete), data di halaman tetap, hanya diperbarui isi <main> tanpa reload, redirect, atau navigasi ulang
+
+Sidebar tetap utuh, layout tidak berubah
+
+🧪 Contoh Alur
+User login → diarahkan ke /dashboard
+
+Halaman dashboard menampilkan sapaan + sidebar
+
+Klik sidebar "Users" → load /users/indeks ke dalam <main>
+
+Klik tombol "Edit" → tampil popup modal (bukan pindah halaman)
+
+Setelah update, modal ditutup → isi user list (/users/indeks) diperbarui via AJAX (tanpa reload)
+
+📦 Package yang Sudah Diinstal
+pgsql
+Salin
+Edit
+express, express-session, multer, mysql2, nodemon, body-parser, dotenv, cors, ejs, sequelize
+Yang dipakai hanya yang relevan: express, express-session, multer, mysql2
+🎯 Tujuan CRUD (Modal + AJAX, tanpa reload atau redirect):
+
+Saat melakukan aktivitas CRUD (Create, Read, Update, Delete) pada halaman http://localhost:3000/users, semuanya harus terjadi di halaman itu saja, tanpa:
+
+reload halaman,
+
+redirect ke URL lain seperti /users/create atau /users/update,
+
+kembali ke halaman home atau semacamnya.
+
+🔧 Mekanisme yang diinginkan:
+Gunakan popup/modal untuk semua form (tambah/edit user).
+
+Gunakan AJAX untuk kirim data ke server.
+
+Setelah submit (sukses), modal ditutup, dan data di <main> langsung terupdate otomatis (tanpa reload atau pindah halaman).
+
+Jangan ada res.redirect() atau full page reload.
+🧼 Penutup
+Tolong buat program lengkap sesuai struktur dan behavior di atas. Jangan keluar dari batas file yang sudah saya tentukan. Kalau tidak muat dalam satu respons, lanjutkan saja di bagian berikutnya. Jangan bikin file tambahan kecuali saya minta eksplisit.
+
+jangan koding menggunakan canvas
+
